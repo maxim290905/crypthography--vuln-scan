@@ -136,3 +136,4 @@ docker-compose logs -f worker
 - Verify PostgreSQL is running: `docker-compose ps postgres`
 - Check connection string in .env
 
+

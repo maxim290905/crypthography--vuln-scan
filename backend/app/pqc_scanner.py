@@ -1,7 +1,4 @@
-"""
-Post-Quantum Cryptography Scanner
-Python port of pqcscan Rust scanner
-"""
+
 import json
 import socket
 import struct

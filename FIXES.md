@@ -42,3 +42,4 @@ sudo docker-compose exec api python -c "from app.startup import init_db; init_db
 - Frontend доступен: http://localhost:3000
 - Попробуйте войти: admin@example.com / admin123
 
+

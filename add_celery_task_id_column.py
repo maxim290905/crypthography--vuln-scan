@@ -42,3 +42,4 @@ if __name__ == "__main__":
     print("Adding celery_task_id column to scans table...")
     add_celery_task_id_column()
 
+

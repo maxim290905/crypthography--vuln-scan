@@ -72,3 +72,4 @@ def test_pq_score_calculation():
     assert score >= 0 and score <= 100
     assert level in ["Low", "Medium", "High", "Critical"]
 
+

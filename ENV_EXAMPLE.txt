@@ -27,3 +27,4 @@ MAX_CONCURRENT_SCANS=3
 # Security (optional - comma-separated list of allowed targets)
 # ALLOWED_TARGETS=example.com,test.example.com,192.168.1.0/24
 
+

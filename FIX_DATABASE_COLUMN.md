@@ -36,3 +36,4 @@ sudo docker-compose exec postgres psql -U cryptscan -d cryptscan_db -c "ALTER TA
 sudo docker-compose exec postgres psql -U cryptscan -d cryptscan_db -c "\d scans" | grep celery_task_id
 ```
 
+

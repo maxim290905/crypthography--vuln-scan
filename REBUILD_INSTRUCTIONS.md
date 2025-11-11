@@ -76,3 +76,4 @@ sudo docker-compose exec postgres psql -U cryptscan -c "CREATE DATABASE cryptsca
 sudo docker-compose exec api python -c "from app.startup import init_db; init_db()"
 ```
 
+

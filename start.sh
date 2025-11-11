@@ -35,3 +35,4 @@ else
     docker-compose up --build
 fi
 
+

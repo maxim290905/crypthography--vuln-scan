@@ -122,3 +122,4 @@ PQ-Score = round(100 * (0.35*0.8 + 0.25*1.0 + 0.20*1.0 + 0.10*1.0 + 0.10*0.0))
 - Historical trend analysis
 - Compliance mapping (PCI-DSS, HIPAA, etc.)
 
+

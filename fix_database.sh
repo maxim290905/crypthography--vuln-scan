@@ -17,3 +17,4 @@ fi
 
 echo "✅ Готово! Теперь запустите: sudo docker-compose up --build"
 
+
