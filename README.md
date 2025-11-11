@@ -9,7 +9,7 @@
 - **Worker**: Celery worker для выполнения сканирований
 - **Database**: PostgreSQL для хранения результатов
 - **Queue**: Redis для очереди задач
-- **Tools**: testssl.sh и nmap для сканирования
+- **Tools**: testssl.sh, nmap и PQC Scanner для сканирования
 
 ## Быстрый старт
 
@@ -116,6 +116,101 @@ curl -X GET http://localhost:8000/api/scans/$SCAN_ID/report.pdf \
   -H "Authorization: Bearer $TOKEN" \
   -o report.pdf
 ```
+
+## Инструменты сканирования
+
+### PQC Scanner (Post-Quantum Cryptography Scanner)
+
+**PQC Scanner** — это встроенный Python-модуль для определения поддержки Post-Quantum Cryptography алгоритмов на TLS-серверах. Это порт популярного Rust-сканера `pqcscan`.
+
+#### Что делает PQC Scanner
+
+PQC Scanner проверяет, поддерживает ли целевой TLS-сервер постквантовые криптографические алгоритмы, такие как:
+- **MLKEM** (Module-Lattice-Based Key-Encapsulation Mechanism) — чисто PQC алгоритмы
+- **Hybrid алгоритмы** — комбинации классических и PQC алгоритмов (например, X25519MLKEM768)
+
+#### Как работает PQC Scanner
+
+1. **Создание TLS ClientHello вручную**
+   - Сканер создает TLS 1.3 ClientHello сообщения на низком уровне (бинарный протокол)
+   - Включает расширения: Server Name Indication, Supported Versions, Supported Groups, Signature Algorithms, Key Share
+
+2. **Тестирование PQC групп**
+   - Для каждой PQC группы из конфигурации (`tls_groups.json`) сканер:
+     - Создает TCP соединение с целевым сервером
+     - Отправляет ClientHello с указанием конкретной PQC группы в `supported_groups` extension
+     - Отправляет пустой `key_share` extension (сервер ответит своим выбором)
+
+3. **Анализ ответа сервера**
+   - **ServerHello (0x16)**: Если сервер отвечает ServerHello, это означает, что он поддерживает запрошенную PQC группу
+   - **Alert (0x15)**: Если сервер отвечает Alert, это означает, что он не поддерживает запрошенную группу
+   - Парсинг расширений ServerHello для определения выбранной группы и списка поддерживаемых групп
+
+4. **Определение поддержки PQC**
+   - Если получен ServerHello → группа поддерживается (даже если сервер выбрал другую группу)
+   - Если сервер выбрал PQC группу → система определенно поддерживает PQC
+   - Если запрошенная группа есть в `supported_groups` списке → группа поддерживается
+
+#### Поддерживаемые PQC алгоритмы
+
+Сканер тестирует следующие типы алгоритмов:
+
+- **Чистые PQC алгоритмы:**
+  - MLKEM512, MLKEM768, MLKEM1024
+  - MLKEMED25519, ED25519MLKEM768
+
+- **Hybrid алгоритмы (рекомендуются):**
+  - X25519MLKEM768 (X25519 + MLKEM768)
+  - SECP256R1MLKEM768 (SECP256R1 + MLKEM768)
+  - SECP384R1MLKEM1024 (SECP384R1 + MLKEM1024)
+
+#### Приоритет тестирования
+
+Сканер тестирует группы в следующем порядке приоритета:
+1. MLKEM768, MLKEM1024
+2. X25519MLKEM768, SECP256R1MLKEM768
+3. MLKEM512, MLKEMED25519, ED25519MLKEM768
+4. Остальные PQC группы
+
+#### Результаты сканирования
+
+PQC Scanner возвращает:
+- `pqc_supported`: `true`/`false` — поддерживает ли сервер PQC
+- `pqc_algos`: список чистых PQC алгоритмов (например, ["MLKEM768"])
+- `hybrid_algos`: список hybrid алгоритмов (например, ["X25519MLKEM768"])
+- `nonpqc_algos`: список не-PQC алгоритмов (если тестируются)
+
+#### Интеграция в общий сканер
+
+PQC Scanner автоматически вызывается во время TLS/Network сканирования и результаты включаются в общий отчет. Если сервер не поддерживает PQC, создается finding с категорией `no_pqc_support` и приоритетом P0, что значительно снижает PQ-Score.
+
+#### Пример использования
+
+```python
+from app.pqc_scanner import PQCScanner
+
+scanner = PQCScanner()
+result = scanner.scan_target("example.com", 443)
+
+print(f"PQC Supported: {result['pqc_supported']}")
+print(f"Hybrid Algos: {result['hybrid_algos']}")
+print(f"PQC Algos: {result['pqc_algos']}")
+```
+
+### testssl.sh
+
+Используется для глубокого анализа TLS/SSL конфигурации:
+- Проверка поддерживаемых версий TLS
+- Анализ cipher suites
+- Проверка сертификатов
+- Обнаружение уязвимостей (BEAST, POODLE, Heartbleed и др.)
+
+### nmap
+
+Используется для сетевого сканирования:
+- Определение открытых портов
+- Обнаружение TLS/SSL сервисов
+- Анализ SSL/TLS конфигурации через NSE скрипты
 
 ## Структура проекта
 

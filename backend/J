@@ -1,29 +1,44 @@
-# Nmap 7.95 scan initiated Tue Nov 11 20:52:03 2025 as: nmap -Pn -sT -p 443,8443,636,989,990,992,993,994,995 --script ssl-enum-ciphers,ssl-cert --script-timeout 10s --host-timeout 30s -T4 -oJ - ya.ru
+# Nmap 7.95 scan initiated Tue Nov 11 21:53:37 2025 as: nmap -Pn -sT -p 443,8443,636,989,990,992,993,994,995 --script ssl-enum-ciphers,ssl-cert --script-timeout 10s --host-timeout 30s -T4 -oJ - 89.191.229.20
 Failed to resolve "-".
 Bare '-': did you put a space between '--'?
-Nmap scan report for ya.ru (5.255.255.242)
-Host is up (0.014s latency).
-Other addresses for ya.ru (not scanned): 77.88.44.242 77.88.55.242 2a02:6b8::2:242
+Nmap scan report for vds-cl93891.timeweb.ru (89.191.229.20)
+Host is up (0.013s latency).
 
-PORT     STATE    SERVICE
-443/tcp  open     https
-| ssl-cert: Subject: commonName=*.yandex.tr/organizationName=YANDEX LLC/stateOrProvinceName=Moscow/countryName=RU
-| Subject Alternative Name: DNS:*.yandex.tr, DNS:xn--d1acpjx3f.xn--p1ai, DNS:*.xn--d1acpjx3f.xn--p1ai, DNS:yandex.aero, DNS:*.yandex.aero, DNS:yandex.jobs, DNS:*.yandex.jobs, DNS:yandex.net, DNS:*.yandex.net, DNS:yandex.org, DNS:*.yandex.org, DNS:yandex.de, DNS:*.yandex.de, DNS:ya.ru, DNS:*.ya.ru, DNS:yandex.it, DNS:*.yandex.it, DNS:yandex.uz, DNS:*.yandex.uz, DNS:yandex.tm, DNS:*.yandex.tm, DNS:yandex.tj, DNS:*.yandex.tj, DNS:yandex.ru, DNS:*.yandex.ru, DNS:yandex.md, DNS:*.yandex.md, DNS:yandex.lv, DNS:*.yandex.lv, DNS:yandex.lt, DNS:*.yandex.lt, DNS:yandex.kz, DNS:*.yandex.kz, DNS:yandex.fr, DNS:*.yandex.fr, DNS:yandex.ee, DNS:*.yandex.ee, DNS:yandex.com.tr, DNS:*.yandex.com.tr, DNS:yandex.com.ge, DNS:*.yandex.com.ge, DNS:yandex.com.am, DNS:*.yandex.com.am, DNS:yandex.com, DNS:*.yandex.com, DNS:yandex.co.il, DNS:*.yandex.co.il, DNS:yandex.by, DNS:*.yandex.by, DNS:yandex.az, DNS:*.yandex.az, DNS:yandex.tr
-| Issuer: commonName=GlobalSign ECC OV SSL CA 2018/organizationName=GlobalSign nv-sa/countryName=BE
+PORT     STATE  SERVICE
+443/tcp  open   https
+| ssl-enum-ciphers: 
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A
+|       TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|   TLSv1.3: 
+|     ciphers: 
+|       TLS_AKE_WITH_AES_128_GCM_SHA256 (ecdh_x25519) - A
+|       TLS_AKE_WITH_AES_256_GCM_SHA384 (ecdh_x25519) - A
+|       TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) - A
+|     cipher preference: server
+|_  least strength: A
+| ssl-cert: Subject: 
+| Subject Alternative Name: IP Address:89.191.229.20
+| Issuer: commonName=Caddy Local Authority - ECC Intermediate
 | Public Key type: ec
 | Public Key bits: 256
-| Signature Algorithm: ecdsa-with-SHA384
-| Not valid before: 2025-08-26T08:03:35
-| Not valid after:  2026-02-23T20:59:59
-| MD5:   30b9:a58b:9d5c:44fa:e865:185e:5d32:7bdd
-|_SHA-1: 7bff:0281:48ef:11e9:f6fd:be76:15a5:572f:b5ab:4db8
-636/tcp  open     ldapssl
-989/tcp  open     ftps-data
-990/tcp  open     ftps
-992/tcp  open     telnets
-993/tcp  filtered imaps
-994/tcp  open     ircs
-995/tcp  filtered pop3s
-8443/tcp open     https-alt
+| Signature Algorithm: ecdsa-with-SHA256
+| Not valid before: 2025-11-11T16:39:15
+| Not valid after:  2025-11-12T04:39:15
+| MD5:   656b:f2fc:b287:309d:2ded:bd6c:b088:1309
+|_SHA-1: e89d:0ef7:8e0e:2db2:425a:a92e:541b:eb8a:ed3a:53ef
+636/tcp  open   ldapssl
+989/tcp  open   ftps-data
+990/tcp  open   ftps
+992/tcp  open   telnets
+993/tcp  closed imaps
+994/tcp  open   ircs
+995/tcp  closed pop3s
+8443/tcp open   https-alt
 
-# Nmap done at Tue Nov 11 20:52:15 2025 -- 1 IP address (1 host up) scanned in 11.97 seconds
+# Nmap done at Tue Nov 11 21:53:44 2025 -- 1 IP address (1 host up) scanned in 6.76 seconds
