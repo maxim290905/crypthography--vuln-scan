@@ -1,0 +1,29 @@
+# Database
+POSTGRES_USER=cryptscan
+POSTGRES_PASSWORD=cryptscan_pass
+POSTGRES_DB=cryptscan_db
+DATABASE_URL=postgresql://cryptscan:cryptscan_pass@postgres:5432/cryptscan_db
+
+# Redis
+REDIS_URL=redis://redis:6379/0
+
+# JWT
+JWT_SECRET_KEY=your-secret-key-change-in-production-min-32-chars
+JWT_ALGORITHM=HS256
+JWT_EXPIRATION_HOURS=24
+
+# Application
+ENVIRONMENT=development
+LOG_LEVEL=INFO
+
+# Storage
+STORAGE_PATH=/app/storage
+REPORT_RETENTION_DAYS=30
+
+# Scan settings
+SCAN_TIMEOUT_SECONDS=300
+MAX_CONCURRENT_SCANS=3
+
+# Security (optional - comma-separated list of allowed targets)
+# ALLOWED_TARGETS=example.com,test.example.com,192.168.1.0/24
+

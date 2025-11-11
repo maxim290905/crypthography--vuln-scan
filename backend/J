@@ -1,0 +1,3 @@
+# Nmap 7.95 scan initiated Tue Nov 11 19:12:48 2025 as: nmap -sV --script ssl-enum-ciphers,ssl-cert -oJ - google.com
+Failed to resolve "-".
+Bare '-': did you put a space between '--'?
